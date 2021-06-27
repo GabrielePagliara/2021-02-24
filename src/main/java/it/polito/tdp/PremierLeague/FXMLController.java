@@ -62,6 +62,14 @@ public class FXMLController {
 
     @FXML
     void doGiocatoreMigliore(ActionEvent event) {    	
+    	txtResult.clear();
+    	
+    	if(this.model.getGrafo()== null) {
+    		txtResult.appendText("Crea prima il grafo!");
+    		return;
+    	}
+    	
+    	txtResult.appendText("GIOCATORE MIGLIORE: \n"+ this.model.getMigliore());
     	
     }
     

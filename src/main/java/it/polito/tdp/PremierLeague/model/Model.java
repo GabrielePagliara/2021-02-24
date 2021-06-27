@@ -66,4 +66,40 @@ public class Model {
 	});
 		return matches;	
 	}
+	
+	public GiocatoreMigliore getMigliore() {
+		if(grafo == null) {
+			return null;
+		}
+		
+		Player best = null;
+		Double maxDelta = (double) Integer.MIN_VALUE;
+		
+		for(Player p: this.grafo.vertexSet()) {
+			//calcolo somma dei pesi degli archi uscenti
+			double pesoUscente = 0.0;
+			for(DefaultWeightedEdge edge: this.grafo.outgoingEdgesOf(p)) {
+				pesoUscente += this.grafo.getEdgeWeight(edge);
+			}
+			
+			// calcolo la somma dei pesi degli archi entranti
+			double pesoEntrante = 0.0;
+			for(DefaultWeightedEdge edge : this.grafo.incomingEdgesOf(p)){
+				pesoEntrante += this.grafo.getEdgeWeight(edge);
+			}
+			
+			double delta = pesoUscente - pesoEntrante;
+			if(delta > maxDelta) {
+				best = p;
+				maxDelta = delta;
+			}
+		}
+		
+		return new GiocatoreMigliore(best, maxDelta); 
+	}
+
+	public Graph<Player, DefaultWeightedEdge> getGrafo() {
+		return this.grafo;
+	}
+	
 }
